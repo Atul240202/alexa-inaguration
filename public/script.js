@@ -201,7 +201,6 @@ const touchSlide = (() => {
 
 
 let socket=io()
-
 let btnStart=document.getElementById("start")
 const params = new URLSearchParams(window.location.search)
 
@@ -209,7 +208,7 @@ const params = new URLSearchParams(window.location.search)
 btnStart.onclick=function(){
     if (params.has("code")){
         socket.emit("start_btn_clicked",{
-            "code":params.get("code")
+            "code":params.get("code").split("/")[0]
         })
     }
 }
@@ -218,9 +217,7 @@ let videoPlayer=document.getElementById("video_player")
 socket.on("start_event",(data)=>{
     // slide("increase")
     setTimeout(()=>{
-        var isPlaying = videoPlayer.currentTime > 0 && !video.paused && !video.ended 
-        if (!isPlaying) {
-            video.play();
-        }
+        videoPlayer.pause()
+        videoPlayer.play()
     },1000)
 })
